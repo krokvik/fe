@@ -12,8 +12,9 @@ const middleware = [
     thunk,
     routerMiddleware(history)
 ]
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-const composedEnhancers = compose(
+const composedEnhancers = composeEnhancers(
     applyMiddleware(...middleware),
     ...enhancers
 )
