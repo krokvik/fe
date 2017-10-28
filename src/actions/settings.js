@@ -27,11 +27,9 @@ export function saveSettings(payload) {
         [CALL_API]: {
             endpoint: '/api/settings',
             method: 'PUT',
+            body: JSON.stringify(payload),
             types: [
-                {
-                    type: PUT_SETTINGS_REQUEST,
-                    payload: () => payload
-                },
+                PUT_SETTINGS_REQUEST,
                 PUT_SETTINGS_RECEIVE,
                 PUT_SETTINGS_FAILURE,
             ],
