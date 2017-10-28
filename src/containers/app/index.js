@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom'
 import { Layout, Menu } from 'antd';
-import Login from '../login'
+import Home from '../home'
 import Profile from '../profile'
 
 import 'antd/dist/antd.css';
@@ -31,7 +31,7 @@ export const App = () => (
             </div>
             <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
                 <main>
-                     <Route exact path="/" component={Login} />
+                     <Route exact path="/" component={Home} />
                      <Route exact path="/profile" component={Profile} />
                  </main>
             </div>

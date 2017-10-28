@@ -1,39 +1,31 @@
 import React from 'react'
-import {connect} from "react-redux";
 import {isUserSigned} from "../../selectors";
+import {connect} from "react-redux";
+import {push} from "react-router-redux";
+import {bindActionCreators} from "redux";
 
-class Login extends React.Component {
-    componentDidMount () {
-        const { isLogged } = this.props;
+class Profile extends React.PureComponent {
+    componentWillMount() {
+        const {isLogged, redirectToLogin} = this.props;
 
         if (isLogged === false) {
-            window.gapi.signin2.render('sing-in-button', {
-                'scope': 'https://www.googleapis.com/auth/fitness.activity.read',
-                'width': 200,
-                'height': 50,
-                'longtitle': true,
-                'theme': 'dark',
-                'onsuccess': this.onSuccess,
-                'onfailure': this.onFailure
-            });
+            redirectToLogin();
         }
     }
 
-    onSuccess (googleUser) {
-        console.log('Logged in as: ' + googleUser.getBasicProfile().getName(), googleUser);
-    }
-
-    onFailure(error) {
-        console.log(error);
-    }
-
     render () {
-        return <div id="sing-in-button">
-
+        return <div>
+            <h1>Testing</h1>
         </div>
     }
 }
 
-export default connect((state) => ({
-    isLogged: isUserSigned(state),
-}))(Login);
+const mapStateToProps = (state) => ({
+    isLogged: isUserSigned(state)
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    redirectToLogin: () => push('/')
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

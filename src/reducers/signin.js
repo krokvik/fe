@@ -1,13 +1,17 @@
-import {GOOGLE_SIGN_IN} from "../actions";
+import {USER_LOGGED_IN} from "../actions";
 
 const initialState = {
     signed: false,
+    userObject: null,
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case GOOGLE_SIGN_IN:
-            return state
+        case USER_LOGGED_IN:
+            return {
+                signed: true,
+                userObject: action.userObject
+            };
 
         default:
             return state
