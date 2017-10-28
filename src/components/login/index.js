@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import {isUserSigned} from "../../selectors/index";
 import {signUserIn} from "../../actions/index";
 import {bindActionCreators} from "redux";
+import {signUserError} from "../../actions";
+import {getSigninError} from "../../selectors";
 
 class Login extends React.PureComponent {
     componentDidMount () {
@@ -26,21 +28,26 @@ class Login extends React.PureComponent {
     }
 
     onFailure(error) {
-        console.log(error);
+        this.props.signUserError(error);
     }
 
     render () {
-        return <div id="sing-in-button">
+        const {error} = this.props;
+        return <div>
+            <div id="sing-in-button"></div>
+            {error}
         </div>
     }
 }
 
 const mapStateToProps = (state) => ({
-    isLogged: isUserSigned(state)
+    isLogged: isUserSigned(state),
+    error: getSigninError(state),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    signUserIn
+    signUserIn,
+    signUserError,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

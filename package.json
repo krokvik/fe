@@ -20,5 +20,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "proxy": {
+    "/api/*": {
+      "target": "http://172.20.0.1:8080/",
+      "pathRewrite": {
+        "/api": "/"
+      }
+    }
   }
 }

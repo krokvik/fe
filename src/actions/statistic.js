@@ -1,15 +1,23 @@
 import { CALL_API } from 'redux-api-middleware';
+import {getUserAuthToken} from "../selectors";
 
-const REQUEST = '/statistic/REQUEST';
-const RECEIVE = '/statistic/RECEIVE';
-const FAILURE = '/statistic/FAILURE';
+export const STATISTICS_REQUEST = '/statistics/REQUEST';
+export const STATISTICS_RECEIVE = '/statistics/RECEIVE';
+export const STATISTICS_FAILURE = '/statistics/FAILURE';
 
-export function fetchUser(id) {
+export function fetchStatistics() {
     return {
         [CALL_API]: {
-            endpoint: `http://www.example.com/api/users/${id}`,
+            endpoint: '/api',
             method: 'GET',
-            types: [REQUEST, RECEIVE, FAILURE]
-        }
+            headers: (state) => ({'Authorization': 'Bearer ' + getUserAuthToken(state)}),
+            types: [
+                {
+                    type: STATISTICS_REQUEST,
+                },
+                STATISTICS_RECEIVE,
+                STATISTICS_FAILURE
+            ],
+        },
     }
 }
