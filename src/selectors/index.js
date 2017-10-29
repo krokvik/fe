@@ -10,3 +10,6 @@ export const getTodaySteps = (state) => state.statistics.available && state.stat
 export const getTodayCoins = (state) => state.statistics.available && state.statistics.response.today.reward
 
 export const isStatisticsAvailable = (state) => state.statistics.available
+
+export const isClaimLoading = (state) => state.claim.fetching
+export const isClaimDone = (state) => state.claim.good

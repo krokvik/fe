@@ -7,7 +7,10 @@ export default function() {
             const callApi = action[CALL_API]
 
             if (callApi) {
-                callApi.headers = (state) => ({Authorization: 'Bearer ' + getUserAuthToken(state)})
+                callApi.headers = (state) => ({
+                    Authorization: 'Bearer ' + getUserAuthToken(state),
+                    'Content-Type': 'application/json',
+                })
             }
 
             return next(action)
