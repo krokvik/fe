@@ -4,6 +4,7 @@ import signin from './signin'
 import statistics from './statistics'
 import settings from './settings'
 import claim from './claim'
+import account from './account'
 
 export default combineReducers({
     routing: routerReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
     statistics,
     settings,
     claim,
+    account,
 })

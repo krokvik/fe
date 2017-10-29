@@ -13,3 +13,10 @@ export const isStatisticsAvailable = (state) => state.statistics.available
 
 export const isClaimLoading = (state) => state.claim.fetching
 export const isClaimDone = (state) => state.claim.good
+
+export const isAccountLoading = (state) => state.account.fetching
+export const isAccountAvailable = (state) => state.account.available
+
+export const getAccountUser = (state) => state.account.available && state.account.response.user.name
+export const getAccountWallet = (state) => state.account.available && state.account.response.user.wallet
+export const getAccountBalance = (state) => state.account.available && state.account.response.balance
