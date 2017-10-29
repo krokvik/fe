@@ -3,7 +3,8 @@ import {STATISTICS_FAILURE, STATISTICS_RECEIVE, STATISTICS_REQUEST} from "../act
 const initialState = {
     error: null,
     fetching: false,
-    response: null
+    response: null,
+    available: false,
 }
 
 export default (state = initialState, action) => {
@@ -26,6 +27,7 @@ export default (state = initialState, action) => {
                 response: action.payload,
                 error: null,
                 fetching: false,
+                available: true,
             };
 
         default:
