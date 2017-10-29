@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
         case ACCOUNT_FAILURE:
             return {
                 ...initialState,
-                error: "Failed",
+                error: "Failed to receive your account data. Please try again later.",
             };
 
         case ACCOUNT_REQUEST:

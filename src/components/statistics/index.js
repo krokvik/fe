@@ -1,6 +1,8 @@
 import React from 'react'
 import {
+    getClaimError, getStatisticError,
     getTodayCoins, getTodaySteps, getYesterdayCoins, getYesterdaySteps, isClaimDone, isClaimLoading,
+    isStatisticFetching,
     isStatisticsAvailable,
 } from '../../selectors'
 import {connect} from 'react-redux'
@@ -14,7 +16,21 @@ class Statistics extends React.PureComponent {
     }
 
     render() {
-        const {yesterdaySteps, yesterdayCoins, todaySteps, todayCoins, isDone, isLoading, available} = this.props;
+        const {yesterdaySteps, yesterdayCoins, todaySteps, todayCoins, isDone, isLoading, available, error, statisticsError, isFetchingStatistics} = this.props;
+
+        if (isFetchingStatistics) {
+            return <div>
+                <h2>Account statistics</h2>
+                <p>Fetching your statistics</p>
+            </div>
+        }
+
+        if (statisticsError) {
+            return <div>
+                <h2>Account statistics</h2>
+                <p style={{color: 'red'}}>{statisticsError}</p>
+            </div>
+        }
 
         if (!available) {
             return null
@@ -37,13 +53,17 @@ class Statistics extends React.PureComponent {
             key: 'action',
             render: (text, record) => (
                 record.canClaim &&
-                <span>
-                    {!isDone &&
-                     <Button type="primary" loading={isLoading} onClick={this.enterLoading}>
-                        Claim
-                    </Button>}
+                <div>
+                    <span>
+                        {!isDone &&
+                         <Button type="primary" loading={isLoading} onClick={this.enterLoading}>
+                            Claim
+                        </Button>}
+                        {isDone && <span>Claim requested</span>}
+                    </span>
                     {isDone && <span>Claim requested</span>}
-                </span>
+                    {error && <span style={{color: 'red'}}>Error</span>}
+                </div>
             ),
         }];
         const data = [{
@@ -61,6 +81,7 @@ class Statistics extends React.PureComponent {
         }];
 
         return <div>
+            <h2>Account statistics</h2>
             <Table columns={columns} dataSource={data} pagination={false} />
         </div>
     }
@@ -75,6 +96,9 @@ const mapStateToProps = (state) => ({
     isLoading: isClaimLoading(state),
     isDone: isClaimDone(state),
     available: isStatisticsAvailable(state),
+    error: getClaimError(state),
+    statisticsError: getStatisticError(state),
+    isFetchingStatistics: isStatisticFetching(state),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -19,11 +19,13 @@ class SettingsForm extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
 
+        const wallet = this.props.wallet || '';
+
         return (
             <Form onSubmit={this.handleSubmit} className="settings-form">
                 <FormItem>
                     {getFieldDecorator('wallet', {
-                        initialValue: this.props.wallet,
+                        initialValue: wallet,
                         rules: [{ required: true, message: 'Please input your wallet here!' }],
                     })(
                         <Input autoComplete={'off'} prefix={<Icon type="wallet" style={{ fontSize: 13 }} />} placeholder="Wallet ID" />
