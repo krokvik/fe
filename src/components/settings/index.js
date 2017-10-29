@@ -3,6 +3,7 @@ import { Form, Icon, Input, Button } from 'antd';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {saveSettings} from "../../actions";
+import {getAccountWallet} from '../../selectors'
 const FormItem = Form.Item;
 
 class SettingsForm extends React.Component {
@@ -22,9 +23,10 @@ class SettingsForm extends React.Component {
             <Form onSubmit={this.handleSubmit} className="settings-form">
                 <FormItem>
                     {getFieldDecorator('wallet', {
+                        initialValue: this.props.wallet,
                         rules: [{ required: true, message: 'Please input your wallet here!' }],
                     })(
-                        <Input prefix={<Icon type="wallet" style={{ fontSize: 13 }} />} placeholder="Wallet ID" />
+                        <Input autoComplete={'off'} prefix={<Icon type="wallet" style={{ fontSize: 13 }} />} placeholder="Wallet ID" />
                     )}
                 </FormItem>
                 <FormItem>
@@ -39,7 +41,9 @@ class SettingsForm extends React.Component {
 
 const SettingsFormDecorated = Form.create()(SettingsForm);
 
-const mapStateToProps = () => {}
+const mapStateToProps = (state) => ({
+    wallet: getAccountWallet(state),
+})
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     saveSettings

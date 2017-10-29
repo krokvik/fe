@@ -3,13 +3,14 @@ import {connect} from "react-redux";
 import {isUserSigned} from "../../selectors/index";
 import Login from '../../components/login'
 import {
-    getStatisticError, isStatisticFetching, isStatisticsAvailable,
+    getStatisticError, isStatisticFetching
 } from '../../selectors';
 import Statistics from '../../components/statistics'
+import Account from '../../components/account'
 
 class Home extends React.PureComponent {
     render () {
-        const {isLogged, isFetching, error, available} = this.props;
+        const {isLogged, isFetching, error} = this.props;
         let content;
 
         if (isLogged === false) {
@@ -20,13 +21,13 @@ class Home extends React.PureComponent {
             content = <h3>Fetching</h3>
         } else if (error) {
             content = <p style={{color: 'red'}}>{error}</p>
-        } else if (available) {
-            content = <Statistics />
         }
 
         return <div>
             <h1>Hello there!</h1>
             {content}
+            <Statistics />
+            <Account />
         </div>
     }
 }
@@ -35,7 +36,6 @@ const mapStateToProps = (state) => ({
     isLogged: isUserSigned(state),
     isFetching: isStatisticFetching(state),
     error: getStatisticError(state),
-    available: isStatisticsAvailable(state),
 });
 
 export default connect(mapStateToProps)(Home);

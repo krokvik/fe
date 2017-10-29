@@ -1,6 +1,7 @@
 import React from 'react'
 import {
     getTodayCoins, getTodaySteps, getYesterdayCoins, getYesterdaySteps, isClaimDone, isClaimLoading,
+    isStatisticsAvailable,
 } from '../../selectors'
 import {connect} from 'react-redux'
 import { Table, Button } from 'antd';
@@ -13,7 +14,11 @@ class Statistics extends React.PureComponent {
     }
 
     render() {
-        const {yesterdaySteps, yesterdayCoins, todaySteps, todayCoins, isDone, isLoading} = this.props;
+        const {yesterdaySteps, yesterdayCoins, todaySteps, todayCoins, isDone, isLoading, available} = this.props;
+
+        if (!available) {
+            return null
+        }
 
         const columns =  [{
             title: 'Day',
@@ -69,6 +74,7 @@ const mapStateToProps = (state) => ({
     todayCoins: getTodayCoins(state),
     isLoading: isClaimLoading(state),
     isDone: isClaimDone(state),
+    available: isStatisticsAvailable(state),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

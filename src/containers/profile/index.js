@@ -1,5 +1,5 @@
 import React from 'react'
-import {isUserSigned} from "../../selectors";
+import {isUserSigned} from '../../selectors';
 import {connect} from "react-redux";
 import {push} from "react-router-redux";
 import {bindActionCreators} from "redux";
