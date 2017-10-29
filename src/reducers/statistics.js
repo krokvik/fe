@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
         case STATISTICS_FAILURE:
             return {
                 ...initialState,
-                error: "Failed",
+                error: "Failed to receive your account statistics. Please try again later.",
             };
 
         case STATISTICS_REQUEST:
