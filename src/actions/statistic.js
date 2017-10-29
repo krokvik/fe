@@ -7,7 +7,7 @@ export const STATISTICS_FAILURE = '/statistics/FAILURE';
 export function fetchStatistics() {
     return {
         [CALL_API]: {
-            endpoint: '/api',
+            endpoint: '/api/get-stats',
             method: 'GET',
             types: [
                 STATISTICS_REQUEST,
