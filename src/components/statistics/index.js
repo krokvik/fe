@@ -1,13 +1,19 @@
 import React from 'react'
 import {
-    getTodayCoins, getTodaySteps, getYesterdayCoins, getYesterdaySteps
+    getTodayCoins, getTodaySteps, getYesterdayCoins, getYesterdaySteps, isClaimDone, isClaimLoading,
 } from '../../selectors'
 import {connect} from 'react-redux'
-import { Table, Icon } from 'antd';
+import { Table, Button } from 'antd';
+import {bindActionCreators} from 'redux'
+import {postClaim} from '../../actions/claim'
 
 class Statistics extends React.PureComponent {
+    enterLoading = () => {
+        this.props.postClaim();
+    }
+
     render() {
-        const {yesterdaySteps, yesterdayCoins, todaySteps, todayCoins} = this.props;
+        const {yesterdaySteps, yesterdayCoins, todaySteps, todayCoins, isDone, isLoading} = this.props;
 
         const columns =  [{
             title: 'Day',
@@ -27,7 +33,11 @@ class Statistics extends React.PureComponent {
             render: (text, record) => (
                 record.canClaim &&
                 <span>
-                    <a href="#">Claim</a>
+                    {!isDone &&
+                     <Button type="primary" loading={isLoading} onClick={this.enterLoading}>
+                        Claim
+                    </Button>}
+                    {isDone && <span>Claim requested</span>}
                 </span>
             ),
         }];
@@ -57,6 +67,12 @@ const mapStateToProps = (state) => ({
     yesterdayCoins: getYesterdayCoins(state),
     todaySteps: getTodaySteps(state),
     todayCoins: getTodayCoins(state),
+    isLoading: isClaimLoading(state),
+    isDone: isClaimDone(state),
 });
 
-export default connect(mapStateToProps)(Statistics);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    postClaim
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Statistics);
